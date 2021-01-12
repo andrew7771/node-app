@@ -1,6 +1,13 @@
 import { Router } from 'express';
-import { createTable } from './models/guests';
+import { TableInitializer } from './app/models/table-initializer';
 
 export const router = Router();
 
-router.get('/', createTable);
+const initializer = new TableInitializer();
+
+router.get('/initialize', initializer.create);
+router.get('/', (req, res) => {
+    res.send('Server is up an running');
+});
+
+
