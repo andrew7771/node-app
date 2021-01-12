@@ -3,7 +3,7 @@ import { Table} from '../table-names';
 import { ITableHandler } from '../table-handler.interface';
 import { createTableCallback } from '../callback';
 
-export class GuestTableHandler implements ITableHandler {
+export class AmenitiesTableHandler implements ITableHandler {
 
     createTable(): Promise<void> {
         return new Promise((resolve) => {
@@ -12,22 +12,21 @@ export class GuestTableHandler implements ITableHandler {
             const dynamoDb = new DynamoDB();
 
             const tableParams: DynamoDB.Types.CreateTableInput = {
-                TableName : Table.Guests,
+                TableName : Table.Amenities,
                 KeySchema: [
                     { AttributeName: 'id', KeyType: 'HASH'},
-                    { AttributeName: 'phone', KeyType: 'RANGE' }
-                    //{ AttributeName: 'email', KeyType: 'RANGE' }
+                    { AttributeName: 'title', KeyType: 'RANGE' }
+
                 ],
                 AttributeDefinitions: [
                     { AttributeName: 'id', AttributeType: 'N' },
-                    // { AttributeName: 'firstName', AttributeType: 'S' },
-                    // { AttributeName: 'lastName', AttributeType: 'S' },
-                    { AttributeName: 'phone', AttributeType: 'S' }
-                    //{ AttributeName: 'email', AttributeType: 'S' }
-                    // { AttributeName: 'lastAction', AttributeType: 'S' },
+                    //{ AttributeName: 'amenityCategoryId', AttributeType: 'N' },
+                    { AttributeName: 'title', AttributeType: 'S' }
+                    // { AttributeName: 'icon', AttributeType: 'S' },
                     // { AttributeName: 'created', AttributeType: 'S' },
                     // { AttributeName: 'modified', AttributeType: 'S' },
-                    // { AttributeName: 'deleted', AttributeType: 'S' }
+                    // { AttributeName: 'deleted', AttributeType: 'S' },
+                    // { AttributeName: 'keyWords', AttributeType: 'S' }
                 ],
                 ProvisionedThroughput: {
                     ReadCapacityUnits: 10,
