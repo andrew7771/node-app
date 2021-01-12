@@ -1,14 +1,13 @@
-import { AWSError, config, DynamoDB } from 'aws-sdk';
+import { config, DynamoDB } from 'aws-sdk';
 import { Table} from '../table-names';
 import { ITableHandler } from '../table-handler.interface';
+import { createTableCallback } from '../callback';
 
 export class GuestTableHandler implements ITableHandler {
 
     createTable(): Promise<void> {
         return new Promise(() => {
-            config.update({
-                region: process.env.AWS_REGION
-            });
+            config.update({ region: process.env.AWS_REGION });
 
             const dynamoDb = new DynamoDB();
 
@@ -28,15 +27,7 @@ export class GuestTableHandler implements ITableHandler {
                 }
             };
 
-            dynamoDb.createTable(tableParams, (err: AWSError, data: DynamoDB.CreateTableOutput) => {
-                if (err) {
-                    console.error(`Unable to create table. Error JSON: ${err.message}`);
-                } else {
-                    console.log('Created table. Table description JSON:', JSON.stringify(data, null, 2));
-                }
-            });
+            dynamoDb.createTable(tableParams, createTableCallback);
         });
     }
 }
-
-
