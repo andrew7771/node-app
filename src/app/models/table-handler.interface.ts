@@ -1,3 +1,3 @@
 export interface ITableHandler {
-    createTable(): void;
+    createTable(): Promise<void>;
 }

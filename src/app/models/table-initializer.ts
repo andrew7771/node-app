@@ -3,12 +3,14 @@ import { ITableHandler } from './table-handler.interface';
 import { GuestTableHandler } from './tables/guests';
 
 export class TableInitializer {
-    create(req: IncomingMessage, res: ServerResponse): void {
+    async create(req: IncomingMessage, res: ServerResponse): Promise<void> {
         const tableHandlers: ITableHandler[] = [];
 
         tableHandlers.push(new GuestTableHandler());
 
-        tableHandlers.forEach(handler => handler.createTable());
+        for (const handler of tableHandlers) {
+            await handler.createTable();
+        }
 
         res.end();
     }
